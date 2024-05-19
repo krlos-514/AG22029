@@ -1,5 +1,5 @@
 section .data
-    num1 dw '75'
+    num1 dw '74'
     num2 dw '19'
     num3 dw '15'
     
