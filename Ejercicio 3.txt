@@ -1,5 +1,5 @@
 section .data
-    num1 dd 625
+    num1 dd 514
     num2 dd 5
     buffer db '000000', 0
     numStr db 6 dup(0), 0
