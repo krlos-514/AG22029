@@ -1,0 +1,96 @@
+section .data
+    num1 dw '75'
+    num2 dw '19'
+    num3 dw '15'
+    
+segment .bss
+    resultado1 resb 2
+    resultado2 resb 2
+
+section .text
+
+
+global _start
+
+_start:
+    mov ax, [num1]
+    sub al, '0'
+    sub ah, '0'
+    mov bx, [num2]
+    sub bl, '0'
+    sub bh, '0'
+    call .resta1
+    int 0x80
+    
+.resta1:
+    cmp bh, ah
+    jg .mayorQue1
+    cmp bh, ah
+    jle .menorOIgual1
+    int 0x80
+    
+.mayorQue1:
+    add bl, 1
+    sub al, bl
+    sub ah, bh
+    add ah, 9
+    add ah, 1
+    add al, '0'
+    add ah, '0'
+    mov [resultado1], ax
+    int 0x80
+    jmp .resta2
+    
+.menorOIgual1:
+    sub al, bl
+    sub ah, bh
+    add al, '0'
+    add ah, '0'
+    mov [resultado1], ax
+    int 0x80
+    jmp .resta2 
+
+.resta2:
+    mov cx, [resultado1]
+    sub cl, '0'
+    sub ch, '0'
+    mov dx, [num3]
+    sub dl, '0'
+    sub dh, '0'
+    cmp dh, ch
+    jg .mayorQue2
+    cmp dh, ch
+    jle .menorOIgual2
+    int 0x80
+    
+.mayorQue2:
+    add dl, 1
+    sub cl, dl
+    sub ch, dh
+    add ch, 9
+    add ch, 1
+    add cl, '0'
+    add ch, '0'
+    mov [resultado2], cx
+    int 0x80
+    call .salida
+    
+.menorOIgual2:
+    sub cl, dl
+    sub ch, dh
+    add cl, '0'
+    add ch, '0'
+    mov [resultado2], cx
+    int 0x80
+    call .salida
+    
+.salida:
+    mov ecx, resultado2
+    mov edx, 2
+    mov eax, 4
+    mov ebx, 1
+    int 0x80
+    
+    mov eax,1
+    mov ebx,0
+    int 0x80

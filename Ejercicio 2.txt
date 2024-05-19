@@ -1,0 +1,36 @@
+section .data
+    num1 db '5'
+    num2 db '4'
+    
+
+section .bss
+    resultado resb 2
+
+section .text
+    global _start
+    
+_start:
+
+    mov al, [num1]
+    sub al, '0'
+    mov bl, [num2]
+    sub bl, '0'
+    imul ax, bx
+    mov cx, 10
+    idiv cx
+    add ax, '0'
+    add dx, '0'
+    mov bl, al
+    mov bh, dl
+    int 0x80
+    
+    mov [resultado], bx
+    mov ecx, resultado
+    mov edx, 2
+    mov eax, 4
+    mov ebx, 1
+    int 0x80
+    
+    mov eax,1
+    mov ebx,0
+    int 0x80
